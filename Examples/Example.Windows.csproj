@@ -43,16 +43,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpFont\SharpFont.csproj">
-      <Project>{C293DB32-FA42-486D-B128-5A12522FAE4E}</Project>
+      <Project>{c293db32-fa42-486d-b128-5a12522fae4e}</Project>
       <Name>SharpFont</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Fonts\SIL Open Font License 1.1.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="freetype6.dll">
+    <Content Include="freetype.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

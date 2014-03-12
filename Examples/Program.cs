@@ -22,10 +22,7 @@ SOFTWARE.*/
 
 using System;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Threading;
+//using System.Drawing.Imaging;
 
 using SharpFont;
 
@@ -59,9 +56,9 @@ namespace Examples
 						face.SetCharSize(0, 32 * 64, 0, 96);
 
 						Console.WriteLine("\nWriting string \"Hello World!\":");
-						Bitmap bmp = RenderString(face, "Hello World!");
-						bmp.Save("helloworld.png", ImageFormat.Png);
-						bmp.Dispose();
+						//Bitmap bmp = RenderString(face, "Hello World!");
+						//bmp.Save("helloworld.png", ImageFormat.Png);
+						//bmp.Dispose();
 
 						Console.WriteLine("Done!\n");
 					}
@@ -72,79 +69,80 @@ namespace Examples
 				Console.Write(e.Error.ToString());
 			}
 
-			Console.ReadKey();
+			//Console.ReadKey();
 		}
 
-		public static Bitmap RenderString(Face face, string text)
-		{
-			int penX = 0, penY = 0;
-			int width = 0;
-			int height = 0;
+		//public static Bitmap RenderString(Face face, string text)
+		//{
+		//	int penX = 0, penY = 0;
+		//	int width = 0;
+		//	int height = 0;
+        //
+		//	//measure the size of the string before rendering it, requirement of Bitmap.
+		//	for (int i = 0; i < text.Length; i++)
+		//	{
+		//		char c = text[i];
+        //
+		//		uint glyphIndex = face.GetCharIndex(c);
+		//		face.LoadGlyph(glyphIndex, LoadFlags.Default, LoadTarget.Normal);
+        //
+		//		width += (int)face.Glyph.Advance.X >> 6;
+        //
+		//		if (face.HasKerning && i < text.Length - 1)
+		//		{
+		//			char cNext = text[i + 1];
+		//			width += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X >> 6;
+		//		}
+        //
+		//		if (face.Glyph.Metrics.Height >> 6 > height)
+		//			height = (int)face.Glyph.Metrics.Height >> 6;
+		//	}
+        //
+		//	//create a new bitmap that fits the string.
+		//	Bitmap bmp = new Bitmap(width, height);
+		//	Graphics g = Graphics.FromImage(bmp);
+		//	g.Clear(Color.Gray);
+        //
+		//	//draw the string
+		//	for (int i = 0; i < text.Length; i++)
+		//	{
+		//		char c = text[i];
+        //
+		//		uint glyphIndex = face.GetCharIndex(c);
+		//		face.LoadGlyph(glyphIndex, LoadFlags.Default, LoadTarget.Normal);
+		//		face.Glyph.RenderGlyph(RenderMode.Normal);
+        //
+		//		if (c == ' ')
+		//		{
+		//			penX += (int)face.Glyph.Advance.X >> 6;
+        //
+		//			if (face.HasKerning && i < text.Length - 1)
+		//			{
+		//				char cNext = text[i + 1];
+		//				width += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X >> 6;
+		//			}
+        //
+		//			penY += (int)face.Glyph.Advance.Y >> 6;
+		//			continue;
+		//		}
+        //
+		//		Bitmap cBmp = face.Glyph.Bitmap.ToGdipBitmap(Color.Firebrick);
+		//		g.DrawImageUnscaled(cBmp, penX, penY + (bmp.Height - face.Glyph.Bitmap.Rows));
+        //
+		//		penX += (int)face.Glyph.Advance.X >> 6;
+		//		penY += (int)face.Glyph.Advance.Y >> 6;
+        //
+		//		if (face.HasKerning && i < text.Length - 1)
+		//		{
+		//			char cNext = text[i + 1];
+		//			penX += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X >> 6;
+		//		}
+		//	}
+        //
+		//	g.Dispose();
+		//	return bmp;
+		//}
 
-			//measure the size of the string before rendering it, requirement of Bitmap.
-			for (int i = 0; i < text.Length; i++)
-			{
-				char c = text[i];
-
-				uint glyphIndex = face.GetCharIndex(c);
-				face.LoadGlyph(glyphIndex, LoadFlags.Default, LoadTarget.Normal);
-
-				width += (int)face.Glyph.Advance.X >> 6;
-
-				if (face.HasKerning && i < text.Length - 1)
-				{
-					char cNext = text[i + 1];
-					width += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X >> 6;
-				}
-
-				if (face.Glyph.Metrics.Height >> 6 > height)
-					height = (int)face.Glyph.Metrics.Height >> 6;
-			}
-
-			//create a new bitmap that fits the string.
-			Bitmap bmp = new Bitmap(width, height);
-			Graphics g = Graphics.FromImage(bmp);
-			g.Clear(Color.Gray);
-
-			//draw the string
-			for (int i = 0; i < text.Length; i++)
-			{
-				char c = text[i];
-
-				uint glyphIndex = face.GetCharIndex(c);
-				face.LoadGlyph(glyphIndex, LoadFlags.Default, LoadTarget.Normal);
-				face.Glyph.RenderGlyph(RenderMode.Normal);
-
-				if (c == ' ')
-				{
-					penX += (int)face.Glyph.Advance.X >> 6;
-
-					if (face.HasKerning && i < text.Length - 1)
-					{
-						char cNext = text[i + 1];
-						width += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X >> 6;
-					}
-
-					penY += (int)face.Glyph.Advance.Y >> 6;
-					continue;
-				}
-
-				Bitmap cBmp = face.Glyph.Bitmap.ToGdipBitmap(Color.Firebrick);
-				g.DrawImageUnscaled(cBmp, penX, penY + (bmp.Height - face.Glyph.Bitmap.Rows));
-
-				penX += (int)face.Glyph.Advance.X >> 6;
-				penY += (int)face.Glyph.Advance.Y >> 6;
-
-				if (face.HasKerning && i < text.Length - 1)
-				{
-					char cNext = text[i + 1];
-					penX += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X >> 6;
-				}
-			}
-
-			g.Dispose();
-			return bmp;
-		}
 
 		/// <summary>
 		/// Called when Face is destroyed.

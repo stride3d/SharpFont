@@ -40,7 +40,7 @@ namespace SharpFont
 		/// <summary>
 		/// Defines the location of the FreeType DLL. Update SharpFont.dll.config if you change this!
 		/// </summary>
-		private const string FreetypeDll = "freetype6.dll";
+		private const string FreetypeDll = "freetype.dll";
 
 		/// <summary>
 		/// Defines the calling convention for P/Invoking the native freetype methods.
