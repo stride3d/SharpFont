@@ -80,7 +80,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SharpFont\SharpFont.csproj">
       <Project>{c293db32-fa42-486d-b128-5a12522fae4e}</Project>
-      <Name>SharpFont.Android</Name>
+      <Name>SharpFont</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

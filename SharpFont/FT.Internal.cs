@@ -37,10 +37,14 @@ namespace SharpFont
 	/// </content>
 	public static partial class FT
 	{
-		/// <summary>
-		/// Defines the location of the FreeType DLL. Update SharpFont.dll.config if you change this!
-		/// </summary>
-		private const string FreetypeDll = "freetype.dll";
+	    /// <summary>
+	    /// Defines the location of the FreeType DLL. Update SharpFont.dll.config if you change this!
+	    /// </summary>
+#if IOS_PLATFORM
+		private const string FreetypeDll = "__Internal";
+#else
+	    private const string FreetypeDll = "freetype.dll";
+#endif
 
 		/// <summary>
 		/// Defines the calling convention for P/Invoking the native freetype methods.
