@@ -42,7 +42,7 @@ using FT_ULong = System.UIntPtr;
 namespace SharpFont.TrueType.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct VertHeaderRec
+	internal unsafe struct VertHeaderRec
 	{
 		internal FT_Fixed Version;
 		internal short Ascender;
@@ -58,8 +58,22 @@ namespace SharpFont.TrueType.Internal
 		internal short caret_Slope_Run;
 		internal short caret_Offset;
 
-		[MarshalAs(UnmanagedType.LPArray, SizeConst = 4)]
-		internal short[] Reserved;
+		private fixed short reserved[4];
+		internal short[] Reserved
+		{
+			get
+			{
+				var array = new short[4];
+
+				fixed (short* p = reserved)
+				{
+					for (int i = 0; i < array.Length; i++)
+						array[i] = p[i];
+				}
+
+				return array;
+			}
+		}
 
 		internal short metric_Data_Format;
 		internal ushort number_Of_VMetrics;
