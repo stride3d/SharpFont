@@ -56,6 +56,7 @@ namespace SharpFont
 		#region Fields
 
 		private GenericRec rec;
+	    private readonly GenericFinalizer finalizer;
 
 		#endregion
 
@@ -71,7 +72,8 @@ namespace SharpFont
 		public Generic(IntPtr data, GenericFinalizer finalizer)
 		{
 			rec.data = data;
-			rec.finalizer = finalizer;
+		    this.finalizer = finalizer;
+            rec.finalizer = Marshal.GetFunctionPointerForDelegate(finalizer);
 		}
 
 		internal Generic(GenericRec genInternal)
@@ -127,15 +129,7 @@ namespace SharpFont
 		/// </summary>
 		public GenericFinalizer Finalizer
 		{
-			get
-			{
-				return rec.finalizer;
-			}
-
-			set
-			{
-				rec.finalizer = value;
-			}
+			get { return finalizer; }
 		}
 
 		#endregion
@@ -146,7 +140,7 @@ namespace SharpFont
 		internal void WriteToUnmanagedMemory(IntPtr location)
 		{
 			Marshal.WriteIntPtr(location, rec.data);
-			Marshal.WriteIntPtr(location, IntPtr.Size, Marshal.GetFunctionPointerForDelegate(rec.finalizer));
+			Marshal.WriteIntPtr(location, IntPtr.Size, rec.finalizer);
 		}
 
 		#endregion
