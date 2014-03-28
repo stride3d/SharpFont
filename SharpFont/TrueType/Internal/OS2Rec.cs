@@ -42,7 +42,7 @@ using FT_ULong = System.UIntPtr;
 namespace SharpFont.TrueType.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class OS2Rec
+	internal struct OS2Rec
 	{
 		internal ushort version;
 		internal short xAvgCharWidth;

@@ -239,7 +239,7 @@ namespace SharpFont
 				}
 
 				reference = IntPtr.Zero;
-				rec = null;
+				rec = new SizeRec();
 			}
 		}
 

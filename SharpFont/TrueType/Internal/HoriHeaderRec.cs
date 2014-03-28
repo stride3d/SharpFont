@@ -42,7 +42,7 @@ using FT_ULong = System.UIntPtr;
 namespace SharpFont.TrueType.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class HoriHeaderRec
+	internal struct HoriHeaderRec
 	{
 		internal FT_Fixed Version;
 		internal short Ascender;

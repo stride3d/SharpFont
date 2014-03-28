@@ -42,7 +42,7 @@ using FT_ULong = System.UIntPtr;
 namespace SharpFont.TrueType.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class VertHeaderRec
+	internal struct VertHeaderRec
 	{
 		internal FT_Fixed Version;
 		internal short Ascender;

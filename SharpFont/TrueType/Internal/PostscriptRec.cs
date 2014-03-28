@@ -42,7 +42,7 @@ using FT_ULong = System.UIntPtr;
 namespace SharpFont.TrueType.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class PostscriptRec
+	internal struct PostscriptRec
 	{
 		internal FT_Fixed FormatType;
 		internal FT_Fixed italicAngle;

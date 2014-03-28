@@ -42,7 +42,7 @@ using FT_ULong = System.UIntPtr;
 namespace SharpFont.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class OpenArgsRec
+	internal struct OpenArgsRec
 	{
 		internal OpenFlags flags;
 		internal IntPtr memory_base;
