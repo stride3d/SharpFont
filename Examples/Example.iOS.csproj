@@ -151,7 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpFont\SharpFont.iOS.csproj">
-      <Project>{b457cd52-5112-4eb3-bc07-e834eb2b4613}</Project>
+      <Project>{cb13d7ba-3be8-4450-a29c-67ed557f320d}</Project>
       <Name>SharpFont.iOS</Name>
     </ProjectReference>
   </ItemGroup>
