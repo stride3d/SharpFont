@@ -25,7 +25,7 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-#if WIN64
+#if PLATFORM_WINDOWS
 using FT_26Dot6 = System.Int32;
 using FT_Fixed = System.Int32;
 using FT_Long = System.Int32;

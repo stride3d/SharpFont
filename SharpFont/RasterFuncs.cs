@@ -41,14 +41,14 @@ namespace SharpFont
 	/// <param name="raster">A handle to the new raster object.</param>
 	/// <returns>Error code. 0 means success.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate Error RasterNewFunc(IntPtr memory, [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RasterMarshaler))] Raster raster);
+	public delegate Error RasterNewFunc(IntPtr memory, NativeReference<Raster> raster);
 
 	/// <summary>
 	/// A function used to destroy a given raster object.
 	/// </summary>
 	/// <param name="raster">A handle to the raster object.</param>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void RasterDoneFunc([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RasterMarshaler))] Raster raster);
+	public delegate void RasterDoneFunc(NativeReference<Raster> raster);
 
 	/// <summary><para>
 	/// FreeType provides an area of memory called the ‘render pool’, available to all registered rasters. This pool
@@ -65,7 +65,7 @@ namespace SharpFont
 	/// <param name="pool_base">The address in memory of the render pool.</param>
 	/// <param name="pool_size">The size in bytes of the render pool.</param>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void RasterResetFunc([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RasterMarshaler))] Raster raster, IntPtr pool_base, int pool_size);
+	public delegate void RasterResetFunc(NativeReference<Raster> raster, IntPtr pool_base, int pool_size);
 
 	/// <summary>
 	/// This function is a generic facility to change modes or attributes in a given raster. This can be used for
@@ -76,7 +76,7 @@ namespace SharpFont
 	/// <param name="args">A pointer to the new mode/property to use.</param>
 	[CLSCompliant(false)]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void RasterSetModeFunc([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RasterMarshaler))] Raster raster, uint mode, IntPtr args);
+	public delegate void RasterSetModeFunc(NativeReference<Raster> raster, uint mode, IntPtr args);
 
 	/// <summary>
 	/// Invoke a given raster to scan-convert a given glyph image into a target
@@ -100,7 +100,7 @@ namespace SharpFont
 	/// </param>
 	/// <returns>Error code. 0 means success.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate Error RasterRenderFunc([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RasterMarshaler))] Raster raster, [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RasterParamsMarshaler))] RasterParams @params);
+	public delegate Error RasterRenderFunc(NativeReference<Raster> raster, NativeReference<RasterParams> @params);
 
 	/// <summary>
 	/// A structure used to describe a given raster class to the library.

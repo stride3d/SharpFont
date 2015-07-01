@@ -40,11 +40,10 @@ namespace SharpFont
 	/// <remarks>
 	/// Fields may be changed after a call to <see cref="AttachFile"/> or <see cref="AttachStream"/>.
 	/// </remarks>
-	public sealed class Face : IDisposable
+	public sealed class Face : NativeObject, IDisposable
 	{
 		#region Fields
 
-		private IntPtr reference;
 		private FaceRec rec;
 
 		private bool disposed;
@@ -122,6 +121,7 @@ namespace SharpFont
 		public Face(Library library, IntPtr bufferPtr, int length, int faceIndex)
 			: this()
 		{
+		    IntPtr reference;
 			Error err = FT.FT_New_Memory_Face(library.Reference, bufferPtr, length, faceIndex, out reference);
 
 			if (err != Error.Ok)
@@ -155,7 +155,7 @@ namespace SharpFont
 			}
 		}
 
-		private Face()
+		private Face() : base(IntPtr.Zero)
 		{
 			childSizes = new List<FTSize>();
 		}
@@ -402,6 +402,7 @@ namespace SharpFont
 					throw new ObjectDisposedException("Generic", "Cannot access a disposed object.");
 
 				//rec.generic = value;
+			    IntPtr reference = Reference;
 				value.WriteToUnmanagedMemory(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceRec), "generic").ToInt64()));
 				Reference = reference;
 			}
@@ -725,14 +726,14 @@ namespace SharpFont
 			}
 		}
 
-		internal IntPtr Reference
+		internal override IntPtr Reference
 		{
 			get
 			{
 				if (disposed)
 					throw new ObjectDisposedException("Reference", "Cannot access a disposed object.");
 
-				return reference;
+				return base.Reference;
 			}
 
 			set
@@ -740,8 +741,8 @@ namespace SharpFont
 				if (disposed)
 					throw new ObjectDisposedException("Reference", "Cannot access a disposed object.");
 
-				reference = value;
-				rec = PInvokeHelper.PtrToStructure<FaceRec>(reference);
+				base.Reference = value;
+				rec = PInvokeHelper.PtrToStructure<FaceRec>(value);
 			}
 		}
 
@@ -1314,7 +1315,7 @@ namespace SharpFont
 			if (disposed)
 				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
 
-			return FT.FT_Get_Name_Index(Reference, Marshal.StringToHGlobalAuto(name));
+			return FT.FT_Get_Name_Index(Reference, Marshal.StringToHGlobalAnsi(name));
 		}
 
 		/// <summary>
@@ -2361,7 +2362,7 @@ namespace SharpFont
 
 				childSizes.Clear();
 
-				Error err = FT.FT_Done_Face(reference);
+				Error err = FT.FT_Done_Face(base.Reference);
 
 				if (err != Error.Ok)
 					throw new FreeTypeException(err);
@@ -2372,7 +2373,7 @@ namespace SharpFont
 				if (!parentLibrary.IsDisposed)
 					parentLibrary.RemoveChildFace(this);
 
-				reference = IntPtr.Zero;
+                base.Reference = IntPtr.Zero;
 				rec = new FaceRec();
 
 				if (memoryFaceHandle.IsAllocated)

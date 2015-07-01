@@ -1,81 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C293DB32-FA42-486D-B128-5A12522FAE4E}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpFont</RootNamespace>
-    <AssemblyName>SharpFont</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>2e4773b7-961a-4328-9d77-9749f9071ca2</SharedGUID>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Android\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Android\Debug\SharpFont.xml</DocumentationFile>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Android\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Android\Release\SharpFont.xml</DocumentationFile>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug WIN64|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Windows\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;WIN64</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>bin\Windows\Debug\SharpFont.xml</DocumentationFile>
-    <DebugType>full</DebugType>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
-    <WarningLevel>4</WarningLevel>
-    <Optimize>false</Optimize>
-    <PlatformTarget>x64</PlatformTarget>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release WIN64|AnyCPU' ">
-    <OutputPath>bin\Windows\Release\</OutputPath>
-    <DefineConstants>TRACE;WIN64</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>bin\Windows\Release\SharpFont.xml</DocumentationFile>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x64</PlatformTarget>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>SharpFont.snk</AssemblyOriginatorKeyFile>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>SharpFont</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\NativeObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Internal\NativeReference.cs" />
     <Compile Include="AutoHinterScript.cs" />
     <Compile Include="BBox.cs" />
     <Compile Include="Bdf\Internal\PropertyRec.cs" />
@@ -115,7 +50,6 @@
     <Compile Include="Internal\BitmapRec.cs" />
     <Compile Include="Internal\BitmapSizeRec.cs" />
     <Compile Include="Internal\CharMapRec.cs" />
-    <Compile Include="Internal\FaceMarshsaler.cs" />
     <Compile Include="Internal\FaceRec.cs" />
     <Compile Include="Internal\GenericRec.cs" />
     <Compile Include="Internal\GlyphMetricsRec.cs" />
@@ -123,30 +57,23 @@
     <Compile Include="Internal\GlyphSlotRec.cs" />
     <Compile Include="Internal\GlyphToScriptMapPropertyRec.cs" />
     <Compile Include="Internal\IncreaseXHeightPropertyRec.cs" />
-    <Compile Include="Internal\ListNodeMarshaler.cs" />
     <Compile Include="Internal\ListNodeRec.cs" />
     <Compile Include="Internal\ListRec.cs" />
-    <Compile Include="Internal\MemoryMarshaler.cs" />
     <Compile Include="Internal\MemoryRec.cs" />
     <Compile Include="Internal\ModuleClassRec.cs" />
-    <Compile Include="Internal\ModuleMarshaler.cs" />
     <Compile Include="Internal\OpenArgsRec.cs" />
     <Compile Include="Internal\OutlineFuncsRec.cs" />
     <Compile Include="Internal\OutlineGlyphRec.cs" />
     <Compile Include="Internal\OutlineRec.cs" />
     <Compile Include="Internal\ParameterRec.cs" />
     <Compile Include="Internal\RasterFuncsRec.cs" />
-    <Compile Include="Internal\RasterMarshaler.cs" />
-    <Compile Include="Internal\RasterParamsMarshaler.cs" />
     <Compile Include="Internal\RasterParamsRec.cs" />
     <Compile Include="Internal\RendererClassRec.cs" />
     <Compile Include="Internal\SizeMetricsRec.cs" />
     <Compile Include="Internal\SizeRec.cs" />
     <Compile Include="Internal\SizeRequestRec.cs" />
-    <Compile Include="Internal\SpanMarshaler.cs" />
     <Compile Include="Internal\SpanRec.cs" />
     <Compile Include="Internal\StreamDescRec.cs" />
-    <Compile Include="Internal\StreamMarshaler.cs" />
     <Compile Include="Internal\StreamRec.cs" />
     <Compile Include="LcdFilter.cs" />
     <Compile Include="ListNode.cs" />
@@ -251,20 +178,4 @@
     <Compile Include="Fnt\WinFntID.cs" />
     <Compile Include="FT.Internal.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="SharpFont.dll.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="SharpFont.snk" />
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

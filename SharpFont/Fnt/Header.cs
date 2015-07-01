@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 
 using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 using SharpFont.Fnt.Internal;
@@ -361,10 +362,10 @@ namespace SharpFont.Fnt
 		{
 			get
 			{
-				#if WIN64
+				#if PLATFORM_WINDOWS
 				return rec.reserved1;
 				#else
-				return Array.ConvertAll<UIntPtr, uint>(rec.reserved1, new Converter<UIntPtr, uint>(delegate(UIntPtr u) { return (uint)u; }));
+                return rec.reserved1.Select(x => x.ToUInt32()).ToArray(); 
 				#endif
 			}
 		}

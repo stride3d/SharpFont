@@ -24,6 +24,7 @@ SOFTWARE.*/
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 using SharpFont.Cache;
@@ -668,7 +669,7 @@ namespace SharpFont
 			if (parameters == null)
 				throw new ArgumentNullException("parameters");
 
-			ParameterRec[] paramRecs = Array.ConvertAll<Parameter, ParameterRec>(parameters, p => p.Record);
+            ParameterRec[] paramRecs = parameters.Select(x => x.Record).ToArray();
 			fixed (void* ptr = paramRecs)
 			{
 				Error err = FT.FT_Set_Renderer(Reference, renderer.Reference, numParams, (IntPtr)ptr);

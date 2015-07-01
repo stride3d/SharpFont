@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 
 using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 using SharpFont.PostScript.Internal;
@@ -130,10 +131,10 @@ namespace SharpFont.PostScript
 		{
 			get
 			{
-				#if WIN64
+				#if PLATFORM_WINDOWS
 				return rec.xuid;
 				#else
-				return Array.ConvertAll<UIntPtr, uint>(rec.xuid, new Converter<UIntPtr, uint>(delegate(UIntPtr x) { return (uint)x; }));
+                return rec.xuid.Select(x => x.ToUInt32()).ToArray(); 
 				#endif
 			}
 		}

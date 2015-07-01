@@ -25,7 +25,7 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-#if WIN64
+#if PLATFORM_WINDOWS
 using FT_26Dot6 = System.Int32;
 using FT_Fixed = System.Int32;
 using FT_Long = System.Int32;
@@ -66,7 +66,7 @@ namespace SharpFont
 		/// <param name="top">The upper bound.</param>
 		public BBox(int left, int bottom, int right, int top)
 		{
-#if WIN64
+#if PLATFORM_WINDOWS
 			xMin = left;
 			yMin = bottom;
 			xMax = right;

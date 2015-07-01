@@ -123,7 +123,7 @@ namespace SharpFont
 			rec.cubicTo = cubicTo;
 			rec.shift = shift;
 
-			#if WIN64
+			#if PLATFORM_WINDOWS
 			rec.delta = delta;
 			#else
 			rec.delta = (IntPtr)delta;

@@ -27,7 +27,7 @@ using System.Runtime.InteropServices;
 
 using SharpFont.Internal;
 
-#if WIN64
+#if PLATFORM_WINDOWS
 using FT_26Dot6 = System.Int32;
 using FT_Fixed = System.Int32;
 using FT_Long = System.Int32;
@@ -66,7 +66,7 @@ namespace SharpFont
 		public FTVector(int x, int y)
 			: this()
 		{
-#if WIN64
+#if PLATFORM_WINDOWS
 			this.x = x;
 			this.y = y;
 #else
@@ -78,7 +78,7 @@ namespace SharpFont
 		internal FTVector(IntPtr reference)
 			: this()
 		{
-#if WIN64
+#if PLATFORM_WINDOWS
 			this.x = Marshal.ReadInt32(reference);
 			this.y = Marshal.ReadInt32(reference, sizeof(int));
 #else
@@ -103,7 +103,7 @@ namespace SharpFont
 
 			set
 			{
-#if WIN64
+#if PLATFORM_WINDOWS
 				x = value;
 #else
 				x = (IntPtr)value;
@@ -123,7 +123,7 @@ namespace SharpFont
 
 			set
 			{
-#if WIN64
+#if PLATFORM_WINDOWS
 				y = value;
 #else
 				y = (IntPtr)value;
