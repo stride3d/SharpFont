@@ -203,6 +203,7 @@ namespace SharpFont
 
 		#endregion
 
+#if !IOS_PLATFORM
 		#region Mac Specific Interface
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
@@ -224,6 +225,7 @@ namespace SharpFont
 		internal static extern Error FT_New_Face_From_FSRef(IntPtr library, IntPtr @ref, int face_index, out IntPtr aface);
 
 		#endregion
+#endif
 
 		#region Size Management
 

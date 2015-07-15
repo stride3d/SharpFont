@@ -263,6 +263,7 @@ namespace SharpFont
 
 		#endregion
 
+#if !IOS_PLATFORM
 		#region Mac Specific Interface
 
 		/// <summary>
@@ -345,6 +346,7 @@ namespace SharpFont
 		}
 
 		#endregion
+#endif
 
 		#region Module Management
 
