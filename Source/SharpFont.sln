@@ -13,6 +13,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharpFontShared", "SharpFon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpFont.Portable", "SharpFont\SharpFont.Portable.csproj", "{ECD55E3B-1139-4F0D-AF63-3F471AAF6E91}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpFont.Linux", "SharpFont\SharpFont.Linux.csproj", "{CF9064DC-68D9-4459-99C4-41C3BC5BDC82}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		SharpFont\SharpFontShared.projitems*{ecd55e3b-1139-4f0d-af63-3f471aaf6e91}*SharedItemsImports = 4
@@ -41,6 +43,10 @@ Global
 		{ECD55E3B-1139-4F0D-AF63-3F471AAF6E91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECD55E3B-1139-4F0D-AF63-3F471AAF6E91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECD55E3B-1139-4F0D-AF63-3F471AAF6E91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF9064DC-68D9-4459-99C4-41C3BC5BDC82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF9064DC-68D9-4459-99C4-41C3BC5BDC82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF9064DC-68D9-4459-99C4-41C3BC5BDC82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF9064DC-68D9-4459-99C4-41C3BC5BDC82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
