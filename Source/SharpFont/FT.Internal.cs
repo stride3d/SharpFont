@@ -42,8 +42,6 @@ namespace SharpFont
 		/// </summary>
 #if SHARPFONT_PLATFORM_IOS
 		private const string FreetypeDll = "__Internal";
-#elif SHARPFONT_PLATFORM_LINUX
-		private const string FreetypeDll = "libfreetype.so.6";
 #else
 		private const string FreetypeDll = "freetype";
 #endif

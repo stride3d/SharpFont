@@ -27,6 +27,7 @@
 *.sbr
 *.sdf
 ipch/
+.vs/
 obj/
 [Bb]in
 [Dd]ebug*/
