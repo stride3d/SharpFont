@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2013, 2016 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -44,16 +44,15 @@ namespace SharpFont.TrueType
 	{
 		#region Fields
 
-		private IntPtr reference;
 		private SfntNameRec rec;
 
 		#endregion
 
 		#region Constructors
 
-		internal SfntName(IntPtr reference)
+		internal SfntName(SfntNameRec rec)
 		{
-			Reference = reference;
+			this.rec = rec;
 		}
 
 		#endregion
@@ -108,6 +107,31 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// This property returns <see cref="StringPtr"/> interpreted as UTF-16.
+		/// </summary>
+		public string String
+		{
+			get
+			{
+				//TODO it may be possible to consolidate all of these properties
+				//if the strings follow some sane structure. Otherwise, leave
+				//them or add more overloads for common encodings like UTF-8.
+				return Marshal.PtrToStringUni(rec.@string, (int) Math.Ceiling(rec.string_len/2.0));
+			}
+		}
+
+		/// <summary>
+		/// This property returns <see cref="StringPtr"/> interpreted as ANSI.
+		/// </summary>
+		public string StringAnsi
+		{
+			get
+			{
+				return Marshal.PtrToStringAnsi(rec.@string, (int)rec.string_len);
+			}
+		}
+
 		/// <summary><para>
 		/// Gets the ‘name’ string. Note that its format differs depending on the (platform,encoding) pair. It can be a
 		/// Pascal String, a UTF-16 one, etc.
@@ -115,27 +139,11 @@ namespace SharpFont.TrueType
 		/// Generally speaking, the string is not zero-terminated. Please refer to the TrueType specification for
 		/// details.
 		/// </para></summary>
-		public string String
+		public IntPtr StringPtr
 		{
 			get
 			{
-				//TODO look at TrueType specs, interpret string based on platform, encoding pair.
-				//return string.Empty;
-				return Marshal.PtrToStringUni(rec.@string, (int)rec.string_len);
-			}
-		}
-
-		internal IntPtr Reference
-		{
-			get
-			{
-				return reference;
-			}
-
-			set
-			{
-				reference = value;
-				rec = PInvokeHelper.PtrToStructure<SfntNameRec>(reference);
+				return rec.@string;
 			}
 		}
 

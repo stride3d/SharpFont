@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2013, 2016 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -37,22 +37,24 @@ namespace SharpFont.PostScript
 	{
 		#region Fields
 
-		private IntPtr reference;
 		private FontInfoRec rec;
 
 		#endregion
 
 		#region Constructors
 
-		internal FontInfo(IntPtr reference)
+		internal FontInfo(FontInfoRec rec)
 		{
-			Reference = reference;
+			this.rec = rec;
 		}
 
 		#endregion
 
 		#region Properties
 
+		/// <summary>
+		/// The version of the font.
+		/// </summary>
 		public string Version
 		{
 			get
@@ -61,6 +63,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// The copyright notice for the font.
+		/// </summary>
 		public string Notice
 		{
 			get
@@ -69,6 +74,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the font's full name.
+		/// </summary>
 		public string FullName
 		{
 			get
@@ -77,6 +85,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the font's family name.
+		/// </summary>
 		public string FamilyName
 		{
 			get
@@ -85,6 +96,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the weight description of the font
+		/// </summary>
 		public string Weight
 		{
 			get
@@ -93,6 +107,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets italic angle of the font.
+		/// </summary>
 		public int ItalicAngle
 		{
 			get
@@ -101,6 +118,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets whether the font is fixed pitch.
+		/// </summary>
 		public bool IsFixedPitch
 		{
 			get
@@ -109,6 +129,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the position of the  underline.
+		/// </summary>
 		public short UnderlinePosition
 		{
 			get
@@ -117,26 +140,15 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the thickness of the underline stroke.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort UnderlineThickness
 		{
 			get
 			{
 				return rec.underline_thickness;
-			}
-		}
-
-		internal IntPtr Reference
-		{
-			get
-			{
-				return reference;
-			}
-
-			set
-			{
-				reference = value;
-				rec = PInvokeHelper.PtrToStructure<FontInfoRec>(reference);
 			}
 		}
 
