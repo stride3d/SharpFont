@@ -23,10 +23,7 @@ SOFTWARE.*/
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-
-using SharpFont.Internal;
+using System.Runtime.Versioning;
 
 namespace SharpFont
 {
@@ -201,12 +198,9 @@ namespace SharpFont
 		/// <param name="fontName">Mac OS name of the font (e.g., Times New Roman Bold).</param>
 		/// <param name="faceIndex">Index of the face. For passing to <see cref="Library.NewFaceFromFSSpec"/>.</param>
 		/// <returns>FSSpec to the file. For passing to <see cref="Library.NewFaceFromFSSpec"/>.</returns>
+		[SupportedOSPlatform("ios")]
 		public static IntPtr GetFileFromMacName(string fontName, out int faceIndex)
 		{
-			if (!IsMacOS)
-				throw new InvalidOperationException(
-					$"{nameof(GetFileFromMacName)} can only be called on macOS.");
-
 			IntPtr fsspec;
 
 			Error err = FT_GetFile_From_Mac_Name(fontName, out fsspec, out faceIndex);
@@ -223,12 +217,9 @@ namespace SharpFont
 		/// <param name="fontName">Mac OS name of the font in ATS framework.</param>
 		/// <param name="faceIndex">Index of the face. For passing to <see cref="Library.NewFaceFromFSSpec"/>.</param>
 		/// <returns>FSSpec to the file. For passing to <see cref="Library.NewFaceFromFSSpec"/>.</returns>
+		[SupportedOSPlatform("ios")]
 		public static IntPtr GetFileFromMacAtsName(string fontName, out int faceIndex)
 		{
-			if (!IsMacOS)
-				throw new InvalidOperationException(
-					$"{nameof(GetFileFromMacAtsName)} can only be called on macOS.");
-
 			IntPtr fsspec;
 
 			Error err = FT_GetFile_From_Mac_ATS_Name(fontName, out fsspec, out faceIndex);
@@ -248,12 +239,9 @@ namespace SharpFont
 		/// allocate this buffer before calling this function.
 		/// </param>
 		/// <returns>Index of the face. For passing to <see cref="Library.NewFace"/>.</returns>
+		[SupportedOSPlatform("ios")]
 		public static unsafe int GetFilePathFromMacAtsName(string fontName, byte[] path)
 		{
-			if (!IsMacOS)
-				throw new InvalidOperationException(
-					$"{nameof(GetFilePathFromMacAtsName)} can only be called on macOS.");
-
 			int faceIndex;
 
 			fixed (void* ptr = path)

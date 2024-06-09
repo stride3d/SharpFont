@@ -22,13 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-
 using SharpFont.Cache;
 using SharpFont.Internal;
 using SharpFont.TrueType;
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 
 namespace SharpFont
 {
@@ -284,12 +284,9 @@ namespace SharpFont
 		/// <param name="fond">A FOND resource.</param>
 		/// <param name="faceIndex">Only supported for the -1 ‘sanity check’ special case.</param>
 		/// <returns>A handle to a new face object.</returns>
+		[SupportedOSPlatform("ios")]
 		public Face NewFaceFromFond(IntPtr fond, int faceIndex)
 		{
-			if (!FT.IsMacOS)
-				throw new InvalidOperationException(
-					$"{nameof(NewFaceFromFond)} can only be called on macOS.");
-
 			if (disposed)
 				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
 
@@ -313,12 +310,9 @@ namespace SharpFont
 		/// <param name="spec">FSSpec to the font file.</param>
 		/// <param name="faceIndex">The index of the face within the resource. The first face has index 0.</param>
 		/// <returns>A handle to a new face object.</returns>
+		[SupportedOSPlatform("ios")]
 		public Face NewFaceFromFSSpec(IntPtr spec, int faceIndex)
 		{
-			if (!FT.IsMacOS)
-				throw new InvalidOperationException(
-					$"{nameof(NewFaceFromFSSpec)} can only be called on macOS.");
-
 			if (disposed)
 				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
 
@@ -342,12 +336,9 @@ namespace SharpFont
 		/// <param name="ref">FSRef to the font file.</param>
 		/// <param name="faceIndex">The index of the face within the resource. The first face has index 0.</param>
 		/// <returns>A handle to a new face object.</returns>
+		[SupportedOSPlatform("ios")]
 		public Face NewFaceFromFSRef(IntPtr @ref, int faceIndex)
 		{
-			if (!FT.IsMacOS)
-				throw new InvalidOperationException(
-					$"{nameof(NewFaceFromFSRef)} can only be called on macOS.");
-
 			if (disposed)
 				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
 

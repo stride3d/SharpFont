@@ -38,47 +38,6 @@ namespace SharpFont
 	/// </content>
 	public static partial class FT
 	{
-		static bool? isMacOS;
-
-		/// <summary>
-		/// Returns true if the current .net platform is macOS.
-		/// </summary>
-		internal static bool IsMacOS
-		{
-			get
-			{
-				if (isMacOS != null)
-					return isMacOS.Value;
-				else
-				{
-					lock (typeof(FT))
-					{
-						if (isMacOS == null) // repeat the test
-						{
-							isMacOS = false;
-
-							var os = typeof(Environment)
-								?.GetRuntimeProperty("OSVersion")
-								?.GetValue(null);
-
-							var platformObj = os
-								?.GetType().GetRuntimeProperty("Platform")
-								?.GetValue(os);
-
-							if (platformObj != null)
-							{
-								var platform = (int)platformObj;
-								if (platform == 6)
-									isMacOS = true;
-							}
-						}
-					}
-				}
-
-				return isMacOS.Value;
-			}
-		}
-
 		/// <summary>
 		/// Defines the location of the FreeType DLL. Update SharpFont.dll.config if you change this!
 		/// </summary>
