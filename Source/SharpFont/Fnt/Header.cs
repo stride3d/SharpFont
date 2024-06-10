@@ -23,12 +23,95 @@ SOFTWARE.*/
 #endregion
 
 using System;
-using System.Linq;
 
 using SharpFont.Fnt.Internal;
 
 namespace SharpFont.Fnt
 {
+	/// <summary>
+	/// Describes the general appearance of the font.
+	/// </summary>
+	public enum Family
+	{
+		/// <summary>
+		/// Don't care or don't know which family.
+		/// </summary>
+		DontCare = 0,
+
+		/// <summary>
+		/// The font has a Roman appearance.
+		/// </summary>
+		Roman = 1,
+
+		/// <summary>
+		/// The font has a Swiss appearance.
+		/// </summary>
+		Swiss = 2,
+
+		/// <summary>
+		/// The font has a Modern appearance.
+		/// </summary>
+		Modern = 3,
+
+		/// <summary>
+		/// The font has a script-like appearance.
+		/// </summary>
+		Script = 4,
+
+		/// <summary>
+		/// The font is decorative.
+		/// </summary>
+		Decorative = 5
+	}
+
+	/// <summary>
+	/// Provides flags for font proportions and color.
+	/// </summary>
+	[Flags]
+	[CLSCompliant(false)]
+	public enum Flags : ushort
+	{
+		/// <summary>
+		/// Font is fixed.
+		/// </summary>
+		Fixed = 1 << 0,
+
+		/// <summary>
+		/// Font is proportional.
+		/// </summary>
+		Proportional = 1 << 1,
+
+		/// <summary>
+		/// Font is ABC fixed.
+		/// </summary>
+		AbcFixed = 1 << 2,
+
+		/// <summary>
+		/// Font is ABC proportional.
+		/// </summary>
+		AbcProportional = 1 << 3,
+
+		/// <summary>
+		/// Font is 2-bit color.
+		/// </summary>
+		Color1 = 1 << 4,
+
+		/// <summary>
+		/// Font is 4-bit color.
+		/// </summary>
+		Color16 = 1 << 5,
+
+		/// <summary>
+		/// Font is 8-bit color.
+		/// </summary>
+		Color256 = 1 << 6,
+
+		/// <summary>
+		/// Font is RGB color.
+		/// </summary>
+		RgbColor = 1 << 7
+	}
+
 	/// <summary>
 	/// Windows FNT Header info.
 	/// </summary>
@@ -52,6 +135,9 @@ namespace SharpFont.Fnt
 
 		#region Properties
 
+		/// <summary>
+		/// Gets the version format of the file (e.g. 0x0200).
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort Version
 		{
@@ -61,6 +147,9 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the size of the file in bytes.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint FileSize
 		{
@@ -70,6 +159,10 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the copyright text.
+		/// Limited to 60 bytes.
+		/// </summary>
 		public byte[] Copyright
 		{
 			get
@@ -78,6 +171,9 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the filetype (vector or bitmap). This is exclusively for GDI use.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort FileType
 		{
@@ -87,6 +183,10 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the nominal point size determined by the designer at which the font looks
+		/// best.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort NominalPointSize
 		{
@@ -96,6 +196,9 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the nominal vertical resolution in dots per inch.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort VerticalResolution
 		{
@@ -105,6 +208,9 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the nominal horizontal resolution in dots per inch.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort HorizontalResolution
 		{
@@ -114,6 +220,9 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the height of the font's ascent from the baseline.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort Ascent
 		{
@@ -123,6 +232,9 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the amount of leading inside the bounds of <see cref="PixelHeight"/>.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort InternalLeading
 		{
@@ -132,6 +244,10 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the amount of leading the designer recommends to be added between
+		/// rows.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort ExternalLeading
 		{
@@ -141,30 +257,43 @@ namespace SharpFont.Fnt
 			}
 		}
 
-		public byte Italic
+		/// <summary>
+		/// Gets whether the font is italic.
+		/// </summary>
+		public bool Italic
 		{
 			get
 			{
-				return rec.italic;
+				return (0x01 & rec.italic) == 0x01;
 			}
 		}
 
-		public byte Underline
+		/// <summary>
+		/// Ges whether the font includes underlining.
+		/// </summary>
+		public bool Underline
 		{
 			get
 			{
-				return rec.underline;
+				return (0x01 & rec.underline) == 0x01;
 			}
 		}
 
-		public byte Strikeout
+		/// <summary>
+		/// Ges whether the font includes strikeout.
+		/// </summary>
+		public bool Strikeout
 		{
 			get
 			{
-				return rec.strike_out;
+				return (0x01 & rec.strike_out) == 0x01;
 			}
 		}
 
+		/// <summary>
+		/// Gets the weight of characters on a scale of 1 to 1000, with
+		/// 400 being regular weight.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort Weight
 		{
@@ -174,6 +303,9 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the character set specified by the font.
+		/// </summary>
 		public byte Charset
 		{
 			get
@@ -182,6 +314,11 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the width of the vector grid (vector fonts). For raster fonts,
+		/// a zero value indicates that characters have variables widths,
+		/// otherwise, the value is the width of the bitmap for all characters.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort PixelWidth
 		{
@@ -191,6 +328,10 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the height of the vector grid (vector fonts) or the height
+		/// of the bitmap for all characters (raster fonts).
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort PixelHeight
 		{
@@ -200,6 +341,9 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets whether the font is variable pitch.
+		/// </summary>
 		public byte PitchAndFamily
 		{
 			get
@@ -208,6 +352,9 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the width of characters in the font, based on the width of 'X'.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort AverageWidth
 		{
@@ -217,6 +364,9 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the maximum width of all characters in the font.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort MaximumWidth
 		{
@@ -226,6 +376,9 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the first character code specified in the font.
+		/// </summary>
 		public byte FirstChar
 		{
 			get
@@ -234,6 +387,9 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the last character code specified in the font.
+		/// </summary>
 		public byte LastChar
 		{
 			get
@@ -242,6 +398,10 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the character to substitute when a character is needed that
+		/// isn't defined in the font.
+		/// </summary>
 		public byte DefaultChar
 		{
 			get
@@ -250,6 +410,12 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the character that defines word breaks, for purposes of word
+		/// wrapping and word spacing justification. This value is relative to
+		/// the <see cref="FirstChar"/>, so the character code is this value
+		/// minus <see cref="FirstChar"/>.
+		/// </summary>
 		public byte BreakChar
 		{
 			get
@@ -258,6 +424,9 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the number of bytes in each row of the bitmap (raster fonts).
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort BytesPerRow
 		{
@@ -267,6 +436,10 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the offset in the file, in bytes, to the string that gives the device name.
+		/// The value is 0 for generic fonts.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint DeviceOffset
 		{
@@ -276,6 +449,10 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the offset in the file, in bytes, to the string that gives the face name
+		/// (null-terminated).
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint FaceNameOffset
 		{
@@ -285,6 +462,10 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the absolute machine address of the bitmap,
+		/// which is set by GDI at load time.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint BitsPointer
 		{
@@ -294,6 +475,10 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the offset in the file, in bytes, to the beginning of the character data
+		/// (raster or vector).
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint BitsOffset
 		{
@@ -303,6 +488,9 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Reservied.
+		/// </summary>
 		public byte Reserved
 		{
 			get
@@ -311,15 +499,22 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets <see cref="Flags"/> that describe font proportion and color.
+		/// </summary>
 		[CLSCompliant(false)]
-		public uint Flags
+		public Flags Flags
 		{
 			get
 			{
-				return (uint)rec.flags;
+				return (Flags)rec.flags;
 			}
 		}
 
+		/// <summary>
+		/// ASpace has not been used since before Windows 3.0.
+		/// Set it to 0 for compatibility.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort ASpace
 		{
@@ -329,6 +524,10 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// BSpace has not been used since before Windows 3.0.
+		/// Set it to 0 for compatibility.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort BSpace
 		{
@@ -338,6 +537,10 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// CSpace has not been used since before Windows 3.0.
+		/// Set it to 0 for compatibility.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort CSpace
 		{
@@ -347,6 +550,9 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// Gets the offset of the color table.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort ColorTableOffset
 		{
@@ -356,12 +562,19 @@ namespace SharpFont.Fnt
 			}
 		}
 
+		/// <summary>
+		/// This field is reserved.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint[] Reserved1
 		{
 			get
 			{
-				return rec.reserved1.Select(x => (uint) x).ToArray();
+				uint[] reserved1 = new uint[rec.reserved1.Length];
+				for (int i = 0; i < reserved1.Length; i++)
+					reserved1[i] = (uint)rec.reserved1[i];
+
+				return reserved1;
 			}
 		}
 

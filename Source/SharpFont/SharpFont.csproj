@@ -1,29 +1,28 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras/2.0.54">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;xamarinios10</TargetFrameworks>
+    <TargetFramework>net8.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <PackageId>Stride.SharpFont</PackageId>
-    <DefineConstants Condition="'$(TargetFramework)' == 'xamarinios10'">$(DefineConstants);SHARPFONT_PLATFORM_IOS</DefineConstants>
-	<AllowedReferenceRelatedFileExtensions>$(AllowedReferenceRelatedFileExtensions);.dll.config</AllowedReferenceRelatedFileExtensions>
+    <AllowedReferenceRelatedFileExtensions>$(AllowedReferenceRelatedFileExtensions);.dll.config</AllowedReferenceRelatedFileExtensions>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="SharpFont.dll.config">
+    <None Include="..\SharpFont.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.1" />
   </ItemGroup>
   <PropertyGroup>
-	<TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);CustomContentTarget</TargetsForTfmSpecificContentInPackage>
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);CustomContentTarget</TargetsForTfmSpecificContentInPackage>
   </PropertyGroup>
-  <Target Name="CustomContentTarget" Condition="'$(TargetFramework)' == 'netstandard2.0'">
-	<ItemGroup>
-	  <TfmSpecificPackageFile Include="SharpFont.dll.config">
-		<PackagePath>lib\$(TargetFramework)</PackagePath>
-	  </TfmSpecificPackageFile>
-	</ItemGroup>
+  <Target Name="CustomContentTarget">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="..\SharpFont.dll.config">
+        <PackagePath>lib\$(TargetFramework)</PackagePath>
+      </TfmSpecificPackageFile>
+    </ItemGroup>
   </Target>
 </Project>

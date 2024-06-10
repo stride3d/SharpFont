@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2015 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2016 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -29,6 +29,7 @@ using SharpFont.Cache;
 using SharpFont.Internal;
 using SharpFont.PostScript;
 using SharpFont.TrueType;
+using System.Reflection;
 
 namespace SharpFont
 {
@@ -40,11 +41,8 @@ namespace SharpFont
 		/// <summary>
 		/// Defines the location of the FreeType DLL. Update SharpFont.dll.config if you change this!
 		/// </summary>
-#if SHARPFONT_PLATFORM_IOS
-		private const string FreetypeDll = "__Internal";
-#else
+		/// TODO: Use the same name for all platforms.
 		private const string FreetypeDll = "freetype";
-#endif
 
 		/// <summary>
 		/// Defines the calling convention for P/Invoking the native freetype methods.
@@ -203,8 +201,7 @@ namespace SharpFont
 
 		#endregion
 
-#if !SHARPFONT_PLATFORM_IOS
-		#region Mac Specific Interface
+		#region Mac Specific Interface - check for macOS before calling these methods.
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_New_Face_From_FOND(IntPtr library, IntPtr fond, int face_index, out IntPtr aface);
@@ -224,7 +221,6 @@ namespace SharpFont
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_New_Face_From_FSRef(IntPtr library, IntPtr @ref, int face_index, out IntPtr aface);
 		#endregion
-#endif
 
 		#region Size Management
 
@@ -292,10 +288,10 @@ namespace SharpFont
 		internal static extern bool FT_Has_PS_Glyph_Names(IntPtr face);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern Error FT_Get_PS_Font_Info(IntPtr face, out IntPtr afont_info);
+		internal static extern Error FT_Get_PS_Font_Info(IntPtr face, out PostScript.Internal.FontInfoRec afont_info);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern Error FT_Get_PS_Font_Private(IntPtr face, out IntPtr afont_private);
+		internal static extern Error FT_Get_PS_Font_Private(IntPtr face, out PostScript.Internal.PrivateRec afont_private);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern int FT_Get_PS_Font_Value(IntPtr face, DictionaryKeys key, uint idx, ref IntPtr value, int value_len);
@@ -308,7 +304,7 @@ namespace SharpFont
 		internal static extern uint FT_Get_Sfnt_Name_Count(IntPtr face);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern Error FT_Get_Sfnt_Name(IntPtr face, uint idx, out IntPtr aname);
+		internal static extern Error FT_Get_Sfnt_Name(IntPtr face, uint idx, out TrueType.Internal.SfntNameRec aname);
 
 		#endregion
 
@@ -619,7 +615,7 @@ namespace SharpFont
 		internal static extern Error FT_Property_Set(IntPtr library, string module_name, string property_name, IntPtr value);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-		internal static extern Error FT_Property_Get(IntPtr library, string module_name, string property_name, out IntPtr value);
+		internal static extern Error FT_Property_Get(IntPtr library, string module_name, string property_name, IntPtr value);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_Reference_Library(IntPtr library);

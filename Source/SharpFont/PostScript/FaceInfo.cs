@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2013, 2016 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -23,7 +23,6 @@ SOFTWARE.*/
 #endregion
 
 using System;
-using System.Linq;
 using System.Runtime.InteropServices;
 
 using SharpFont.PostScript.Internal;
@@ -53,6 +52,9 @@ namespace SharpFont.PostScript
 
 		#region Properties
 
+		/// <summary>
+		/// The name of the font, usually condensed from FullName.
+		/// </summary>
 		public string CidFontName
 		{
 			get
@@ -61,6 +63,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// The version number of the font.
+		/// </summary>
 		public int CidVersion
 		{
 			get
@@ -69,6 +74,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the string identifying the font's manufacturer.
+		/// </summary>
 		public string Registry
 		{
 			get
@@ -77,6 +85,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the unique identifier for the character collection.
+		/// </summary>
 		public string Ordering
 		{
 			get
@@ -85,6 +96,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the identifier (supplement number) of the character collection.
+		/// </summary>
 		public int Supplement
 		{
 			get
@@ -93,14 +107,20 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the dictionary of font info that is not used by the PostScript interpreter.
+		/// </summary>
 		public FontInfo FontInfo
 		{
 			get
 			{
-				return new FontInfo(PInvokeHelper.AbsoluteOffsetOf<FaceInfoRec>(Reference, "font_info"));
+				return new FontInfo(rec.font_info);
 			}
 		}
 
+		/// <summary>
+		/// Gets the coordinates of the corners of the bounding box.
+		/// </summary>
 		public BBox FontBBox
 		{
 			get
@@ -109,6 +129,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the value to form UniqueID entries for base fonts within a composite font.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint UidBase
 		{
@@ -118,6 +141,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the number of entries in the XUID array.
+		/// </summary>
 		public int XuidCount
 		{
 			get
@@ -126,15 +152,26 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the extended unique IDS that identify the form, which allows
+		/// the PostScript interpreter to cache the output for reuse.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint[] Xuid
 		{
 			get
 			{
-				return rec.xuid.Select(x => (uint)x).ToArray();
+				uint[] xuid = new uint[rec.xuid.Length];
+				for (int i = 0; i < xuid.Length; i++)
+					xuid[i] = (uint)rec.xuid[i];
+
+				return xuid;
 			}
 		}
 
+		/// <summary>
+		/// Gets the offset in bytes to the charstring offset table.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint CidMapOffset
 		{
@@ -144,6 +181,11 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the length in bytes of the FDArray index.
+		/// A value of 0 indicates that the charstring offset table doesn't contain
+		/// any FDArray indexes.
+		/// </summary>
 		public int FDBytes
 		{
 			get
@@ -152,6 +194,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the length of the offset to the charstring for each CID in the CID font.
+		/// </summary>
 		public int GDBytes
 		{
 			get
@@ -160,6 +205,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the number of valid CIDs in the CIDFont.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint CidCount
 		{
@@ -169,6 +217,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the number of entries in the FontDicts array.
+		/// </summary>
 		public int DictsCount
 		{
 			get
@@ -177,6 +228,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the set of font dictionaries for this font.
+		/// </summary>
 		public FaceDict FontDicts
 		{
 			get
@@ -185,6 +239,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// The offset of the data.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint DataOffset
 		{

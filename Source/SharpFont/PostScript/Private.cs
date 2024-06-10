@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2013, 2016 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -37,22 +37,24 @@ namespace SharpFont.PostScript
 	{
 		#region Fields
 
-		private IntPtr reference;
 		private PrivateRec rec;
 
 		#endregion
 
 		#region Constructors
 
-		internal Private(IntPtr reference)
+		internal Private(PrivateRec rec)
 		{
-			Reference = reference;
+			this.rec = rec;
 		}
 
 		#endregion
 
 		#region Properties
 
+		/// <summary>
+		/// Gets the ID unique to the Type 1 font.
+		/// </summary>
 		public int UniqueId
 		{
 			get
@@ -61,6 +63,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the number of random bytes at the beginning of charstrings (for encryption).
+		/// </summary>
 		public int LenIV
 		{
 			get
@@ -69,6 +74,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the number of values (pairs) in the Blues array.
+		/// </summary>
 		public byte BlueValuesCount
 		{
 			get
@@ -77,6 +85,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the number of values (pairs) in the OtherBlues array.
+		/// </summary>
 		public byte OtherBluesCount
 		{
 			get
@@ -85,6 +96,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the number of values (pairs) in the FamilyBlues array.
+		/// </summary>
 		public byte FamilyBluesCount
 		{
 			get
@@ -93,6 +107,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the number of values (pairs) in the FamilyOtherBlues array.
+		/// </summary>
 		public byte FamilyOtherBluesCount
 		{
 			get
@@ -101,6 +118,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the pairs of blue values.
+		/// </summary>
 		public short[] BlueValues
 		{
 			get
@@ -109,6 +129,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the pairs of blue values.
+		/// </summary>
 		public short[] OtherBlues
 		{
 			get
@@ -117,6 +140,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the pairs of blue values.
+		/// </summary>
 		public short[] FamilyBlues
 		{
 			get
@@ -125,6 +151,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the pairs of blue values.
+		/// </summary>
 		public short[] FamilyOtherBlues
 		{
 			get
@@ -133,6 +162,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the point size at which overshoot suppression ceases.
+		/// </summary>
 		public int BlueScale
 		{
 			get
@@ -141,6 +173,10 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets whether characters smaller than the size given by BlueScale
+		/// should have overshoots suppressed.
+		/// </summary>
 		public int BlueShift
 		{
 			get
@@ -149,6 +185,11 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the number of character space units to extend the effect of an
+		/// alignment zone on a horizontal stem. Setting this to 0 is recommended
+		/// because it is unreliable.
+		/// </summary>
 		public int BlueFuzz
 		{
 			get
@@ -157,6 +198,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Indicates the standard stroke width of vertical stems.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort StandardWidth
 		{
@@ -166,6 +210,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Indicates the standard stroke width of horizontal stems.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort StandardHeight
 		{
@@ -175,6 +222,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Indicates the number of values in the SnapWidths array.
+		/// </summary>
 		public byte SnapWidthsCount
 		{
 			get
@@ -183,6 +233,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Indicates the number of values in the SnapHeights array.
+		/// </summary>
 		public byte SnapHeightsCount
 		{
 			get
@@ -191,6 +244,11 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets whether bold characters should appear thicker than non-bold characters
+		/// at very small point sizes, where otherwise bold characters might appear the
+		/// same as non-bold characters.
+		/// </summary>
 		public bool ForceBold
 		{
 			get
@@ -199,6 +257,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Superseded by the LanguageGroup entry.
+		/// </summary>
 		public bool RoundStemUp
 		{
 			get
@@ -207,6 +268,10 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// StemSnapH is an array of up to 12 values of the most common stroke widths for horizontal stems
+		/// (measured vertically).
+		/// </summary>
 		public short[] SnapWidths
 		{
 			get
@@ -215,6 +280,10 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// StemSnapV is an array of up to 12 values of the most common stroke widths for vertical stems
+		/// (measured horizontally).
+		/// </summary>
 		public short[] SnapHeights
 		{
 			get
@@ -223,6 +292,10 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// The Expansion Factor provides a limit for changing character bounding boxes during
+		/// processing that adjusts the size of fonts of Language Group 1.
+		/// </summary>
 		public int ExpansionFactor
 		{
 			get
@@ -231,6 +304,11 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Indicates the aesthetic characteristics of the font. Currently, only LanguageGroup 0
+		/// (e.g. Latin, Greek, Cyrillic, etc.) and LanguageGroup 1 (e.g. Chinese ideographs, Japanese
+		/// Kanji, etc) are recognized.
+		/// </summary>
 		public int LanguageGroup
 		{
 			get
@@ -239,6 +317,10 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// The Password value is required for the Type 1 BuildChar to operate.
+		/// It must be set to 5839.
+		/// </summary>
 		public int Password
 		{
 			get
@@ -247,25 +329,15 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// The MinFeature value is required for the Type 1 BuildChar to operate, but is obsolete.
+		/// It must be set to {16,16}.
+		/// </summary>
 		public short[] MinFeature
 		{
 			get
 			{
 				return rec.min_feature;
-			}
-		}
-
-		internal IntPtr Reference
-		{
-			get
-			{
-				return reference;
-			}
-
-			set
-			{
-				reference = value;
-				rec = PInvokeHelper.PtrToStructure<PrivateRec>(reference);
 			}
 		}
 

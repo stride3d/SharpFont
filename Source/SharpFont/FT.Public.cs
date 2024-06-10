@@ -23,10 +23,7 @@ SOFTWARE.*/
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-
-using SharpFont.Internal;
+using System.Runtime.Versioning;
 
 namespace SharpFont
 {
@@ -193,7 +190,6 @@ namespace SharpFont
 
 		#endregion
 
-#if !SHARPFONT_PLATFORM_IOS
 		#region Mac Specific Interface
 
 		/// <summary>
@@ -202,6 +198,7 @@ namespace SharpFont
 		/// <param name="fontName">Mac OS name of the font (e.g., Times New Roman Bold).</param>
 		/// <param name="faceIndex">Index of the face. For passing to <see cref="Library.NewFaceFromFSSpec"/>.</param>
 		/// <returns>FSSpec to the file. For passing to <see cref="Library.NewFaceFromFSSpec"/>.</returns>
+		[SupportedOSPlatform("ios")]
 		public static IntPtr GetFileFromMacName(string fontName, out int faceIndex)
 		{
 			IntPtr fsspec;
@@ -220,6 +217,7 @@ namespace SharpFont
 		/// <param name="fontName">Mac OS name of the font in ATS framework.</param>
 		/// <param name="faceIndex">Index of the face. For passing to <see cref="Library.NewFaceFromFSSpec"/>.</param>
 		/// <returns>FSSpec to the file. For passing to <see cref="Library.NewFaceFromFSSpec"/>.</returns>
+		[SupportedOSPlatform("ios")]
 		public static IntPtr GetFileFromMacAtsName(string fontName, out int faceIndex)
 		{
 			IntPtr fsspec;
@@ -241,6 +239,7 @@ namespace SharpFont
 		/// allocate this buffer before calling this function.
 		/// </param>
 		/// <returns>Index of the face. For passing to <see cref="Library.NewFace"/>.</returns>
+		[SupportedOSPlatform("ios")]
 		public static unsafe int GetFilePathFromMacAtsName(string fontName, byte[] path)
 		{
 			int faceIndex;
@@ -257,6 +256,5 @@ namespace SharpFont
 		}
 
 		#endregion
-#endif
 	}
 }
